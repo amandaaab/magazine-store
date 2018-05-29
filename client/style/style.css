@@ -1,0 +1,61 @@
+body{
+  background-color: rgb(192, 202, 209);
+  min-height:100vh;
+  color:rgb(53, 54, 58);
+  padding:0px;
+  margin:0px;
+}
+.cart-item-amount input{
+  max-width: 40px;
+}
+.darker{
+  background:rgb(255, 255, 255);
+  padding:10px;
+  margin:10px;
+  margin: auto;
+  margin-top: 0px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.darker .nav-link{
+  color:rgb(36, 36, 36);
+  font-weight: bold;
+}
+
+.container-fluid{
+  background-color: rgb(255, 255, 255);
+  margin:auto;
+  margin-top: 20px;
+  height: auto;
+}
+
+.homeDiv{
+  background:rgb(255, 255, 255);
+  padding:10px;
+  margin:10px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  min-height: 350px;
+  margin-top:20px;
+ 
+}
+
+.row{
+  margin: auto;
+}
+
+.home{
+  display: flex;
+  justify-content: center;
+  flex-direction: column; 
+  margin: auto;
+  text-align: center;
+}
+
+.card-body{
+  color: black;
+}
+
