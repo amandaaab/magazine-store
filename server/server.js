@@ -89,7 +89,7 @@ app.post('/rest/pay', async(req, res)=>{
 // Kategorier
 
 app.get('/rest/category', async(req, res)=>{
-  let categories = await Category.find();
+  let categories = await Category.find().populate('cat.category');
   res.json(categories);
 });
 
@@ -104,7 +104,6 @@ app.post('/rest/category', async(req, res)=>{
     res.json(err);
   }
 });
-
 
 // Produkter
 app.get('/rest/products', async(req, res)=>{

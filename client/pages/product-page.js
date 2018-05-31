@@ -4,9 +4,15 @@ const ProductPageComponent = {
     template: `
     <div class="container">
     <div class="row">
+    <category
+          v-for="category in categories"
+          v-bind:cat="category"
+          v-bind:key="category._id"
+          ></category> 
     <search 
     v-if="!slice"
-    ></search>
+    ></search> 
+          
         <product
           v-for="product in products"
           v-bind:item="product"
@@ -26,6 +32,11 @@ const ProductPageComponent = {
       } else {
       	this.products = response.data;
     }  
+
+    http.get('/rest/category').then((response) =>{
+      this.categories = response.data;
+      console.log("Produkterna finns" + this.categories);
+    });
   //  Kod för att filtrera och söka vidare, ex för att viosa 3 första produkterna på första sidan
         //      this.products = response.data.splice(0,1);
   
@@ -37,7 +48,9 @@ const ProductPageComponent = {
 
     data(){
       return{
-        products: []
+        products: [],
+        categories:[]
+
       }
     }
   }

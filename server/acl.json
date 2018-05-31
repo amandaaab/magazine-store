@@ -10,5 +10,4 @@
   {"path":"/rest/pay", "roles":[ {"role": "user", "methods": ["POST"]} ]},
   {"path":"/rest/category*", "roles":[ {"role": "*", "methods": ["GET"]}, {"role": "admin", "methods":["PUT","POST","DELETE"]} ]}
 
-  
 ]
