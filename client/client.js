@@ -9,7 +9,7 @@ Vue.component('product-page', ProductPageComponent);
 Vue.component('cart-page', CartPageComponent);
 Vue.component('login-page', LoginPageComponent);
 Vue.component('nav-menu', MenuComponent);
-
+Vue.component('search', SearchComponent);
 const http = axios; // using axios 3rd party XHR/REST lib
 
 const router = new VueRouter({

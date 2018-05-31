@@ -2,9 +2,11 @@
 const ProductPageComponent = {
   props:["slice"],
     template: `
-    <div class="container-fluid">
+    <div class="container">
     <div class="row">
-     
+    <search 
+    v-if="!slice"
+    ></search>
         <product
           v-for="product in products"
           v-bind:item="product"
@@ -17,13 +19,13 @@ const ProductPageComponent = {
   
     created(){
       http.get('/rest/products').then((response) => {
-
+    // Tar ut de 3 senaste produkterna
+    this.products = response.data;
       if(this.slice){
 	    this.products = response.data.splice(- Number(this.slice));
       } else {
       	this.products = response.data;
-    }
-
+    }  
   //  Kod för att filtrera och söka vidare, ex för att viosa 3 första produkterna på första sidan
         //      this.products = response.data.splice(0,1);
   
@@ -31,6 +33,8 @@ const ProductPageComponent = {
         console.error(error);
       });
     },
+
+
     data(){
       return{
         products: []

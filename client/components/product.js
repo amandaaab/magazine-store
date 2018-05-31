@@ -4,15 +4,15 @@ const ProductComponent = {
 
   template: `
  
-  <div class="col-md-4">
-    <div class="card text-center">
-    <div class="card-body">
+  <div class="col-lg-3 m-3" id="productCard">
+  
+    <div class="card-body text-center">
       <h4 class="card-title">{{item.name}}</h4>
       <h6 class="card-text">{{item.price}}kr</h6>
       <p class="card-text" v-html="item.description"></p>
       <button class="btn btn-success" v-on:click="addToCart">Lägg i varukorg</button>
       </div>
-    </div>
+   
     </div>
   `,
 

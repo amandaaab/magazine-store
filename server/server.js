@@ -37,6 +37,7 @@ const accessManager = new AccessManager({
   }
 });
 
+const Category = require('./models/category.js');
 const Product = require('./models/product.js');
 // Cart måste vara global, den används i cart middlewares
 global.Cart = require('./models/cart.js');
@@ -85,16 +86,45 @@ app.post('/rest/pay', async(req, res)=>{
   res.json(charge);
 });
 
+// Kategorier
+
+app.get('/rest/category', async(req, res)=>{
+  let categories = await Category.find();
+  res.json(categories);
+});
+
+app.post('/rest/category', async(req, res)=>{
+  // Skapa produkter
+  let category = await new Category(req.body);
+  try{
+    category.save();
+    res.json(category);
+  }catch(err){
+    console.error(err);
+    res.json(err);
+  }
+});
+
+
 // Produkter
 app.get('/rest/products', async(req, res)=>{
   let products = await Product.find();
   res.json(products);
 });
+
 app.get('/rest/products/:id', async(req, res)=>{
+  // get the product from the db
+  let product = await Product.findOne({_id: req.params.id}).populate('items.product');
+  if(this.search == product){
+    return this.product;
+  }
+  res.json(product);
+});
+/*app.get('/rest/products/:id', async(req, res)=>{
   // get the product from the db
   let product = await Product.findOne({_id: req.params.id});
   res.json(product);
-});
+});*/
 app.post('/rest/products', async(req, res)=>{
   // Skapa produkter
   let product = await new Product(req.body);
