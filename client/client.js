@@ -13,6 +13,8 @@ Vue.component('search', SearchComponent);
 Vue.component('category', CategoryComponent);
 Vue.component('admin-page', AdminPageComponent);
 Vue.component('product-admin', ProductAdminComponent);
+Vue.component('order-admin', OrderAdminComponent);
+Vue.component('order-item', OrderItemComponent);
 
 const http = axios; // using axios 3rd party XHR/REST lib
 

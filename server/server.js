@@ -41,6 +41,7 @@ const Category = require('./models/category.js');
 const Product = require('./models/product.js');
 global.Cart = require('./models/cart.js');
 const User = accessManager.models.user;
+const Order = require('./models/order.js');
 const CartMiddleware = require('./middlewares/cart-middleware.js');
 
 app.use(CartMiddleware);
@@ -81,8 +82,20 @@ let frakt = 50;
     customer: source.customer
   }).catch(e=>console.error);
 
+  let order = await new Order({
+    customer: req.user,
+    result: charge,
+    cartData: cart
+  });
+  await order.save();
+
   res.json(charge);
 });
+
+app.get('/rest/order', async(req, res)=>{
+  let orders = await Order.find(); // {name:"The Times"}
+  res.json(orders);
+}); 
 
 // Kategorier CRUD path
 app.get('/rest/category', async(req, res)=>{
