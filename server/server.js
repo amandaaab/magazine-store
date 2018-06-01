@@ -39,18 +39,15 @@ const accessManager = new AccessManager({
 
 const Category = require('./models/category.js');
 const Product = require('./models/product.js');
-// Cart måste vara global, den används i cart middlewares
 global.Cart = require('./models/cart.js');
-
 const User = accessManager.models.user;
-// MIDDLEWARES
 const CartMiddleware = require('./middlewares/cart-middleware.js');
+
 app.use(CartMiddleware);
 
-// REST 
-// Payment
+// R E S T 
+// Payment CRUD path
 app.post('/rest/pay', async(req, res)=>{
-
   const userEmail = req.session.user.email;
   let paymentSum = 0;
 
@@ -60,8 +57,9 @@ app.post('/rest/pay', async(req, res)=>{
     const price = item.product.price * item.amount;
     paymentSum += price;
   }
+
 // Fraktsumma
-  let frakt = 50;
+let frakt = 50;
   if(paymentSum > 200){
     console.log("Fri frakt");
   }else{
@@ -86,15 +84,13 @@ app.post('/rest/pay', async(req, res)=>{
   res.json(charge);
 });
 
-// Kategorier
-
+// Kategorier CRUD path
 app.get('/rest/category', async(req, res)=>{
   let categories = await Category.find().populate('cat.category');
   res.json(categories);
 });
 
 app.post('/rest/category', async(req, res)=>{
-  // Skapa produkter
   let category = await new Category(req.body);
   try{
     category.save();
@@ -105,27 +101,23 @@ app.post('/rest/category', async(req, res)=>{
   }
 });
 
-// Produkter
+// Produkter CRUD path
 app.get('/rest/products', async(req, res)=>{
-  let products = await Product.find();
+  let products = await Product.find().populate('category');
   res.json(products);
 });
 
 app.get('/rest/products/:id', async(req, res)=>{
-  // get the product from the db
-  let product = await Product.findOne({_id: req.params.id}).populate('items.product');
+  // Hämta produkt från databas
+  let product = await Product.findOne({_id: req.params.id}).populate('category');
   if(this.search == product){
     return this.product;
   }
   res.json(product);
 });
-/*app.get('/rest/products/:id', async(req, res)=>{
-  // get the product from the db
-  let product = await Product.findOne({_id: req.params.id});
-  res.json(product);
-});*/
+
 app.post('/rest/products', async(req, res)=>{
-  // Skapa produkter
+  // Skapa nya produkter
   let product = await new Product(req.body);
   try{
     product.save();
@@ -135,25 +127,27 @@ app.post('/rest/products', async(req, res)=>{
     res.json(err);
   }
 });
+
 app.put('/rest/products/:id', async(req, res)=>{
   // Uppdatera produkter
-  // get the product from the db
+  // Hämta produkt från databas
   let product = await Product.findOne({_id: req.params.id});
-  // perform update
+  // Få reultatet
   let result = await product.update(req.body);
   if(result.ok){
     result = req.body;
   }
   res.json(result);
 });
+
 app.delete('/rest/products/:id', async (req, res)=>{
   // delete the product from the db
   let result = await Product.deleteOne({_id: req.params.id});
   res.json(result);
 });
-// Cart CRUD paths (REMEMBER TO ADD /rest/cart TO ACL)
+
+// Cart CRUD paths
 app.post('/rest/cart', async(req, res)=>{
-  // add a product to the cart (note that the CartMiddleware must already have run)
   let cart = await Cart.findOne({_id: req.session.cart});
   console.log('cart', cart);
   if(cart === null){ // This is a real bug. Haven't figured it out yet.
@@ -175,11 +169,10 @@ app.post('/rest/cart', async(req, res)=>{
     // add new item if no duplicate
     cart.items.push({product: req.body.product, amount: req.body.amount});
   }
-  // commit changes
   cart.save();
-  // respond with cart
   res.json(cart);
 });
+
 app.get('/rest/cart', async(req, res)=>{
   // read the cart (note that the CartMiddleware must already have run), populate the products
   let cart = await Cart.findOne({_id: req.session.cart}).populate("items.product");
@@ -195,6 +188,7 @@ app.post('/rest/register', async (req, res)=>{
   await user.save();
   res.json({msg:'Registered'});
 });
+
 app.post('/rest/login', async (req, res, next)=>{
   // find user
   let user = await User.findOne({email: req.body.email});
@@ -208,6 +202,7 @@ app.post('/rest/login', async (req, res, next)=>{
     res.json({msg:'Fel användarnamn eller lösenord'});
   }
 });
+
 app.all('/rest/logout', async (req, res)=>{
   req.user = {}; // we clear the user
   // CLEAR THE SESSION CART!!

@@ -11,6 +11,9 @@ Vue.component('login-page', LoginPageComponent);
 Vue.component('nav-menu', MenuComponent);
 Vue.component('search', SearchComponent);
 Vue.component('category', CategoryComponent);
+Vue.component('admin-page', AdminPageComponent);
+Vue.component('product-admin', ProductAdminComponent);
+
 const http = axios; // using axios 3rd party XHR/REST lib
 
 const router = new VueRouter({
@@ -18,9 +21,10 @@ const router = new VueRouter({
   base: '/', // set the correct base
   routes: [ // our frontend routes
     { path: '/', component: HomePageComponent },
-    { path: '/products', component: ProductPageComponent},
+    { path: '/products/:category?', component: ProductPageComponent},
     { path: '/cart', component: CartPageComponent},
-    { path: '/login', component: LoginPageComponent}
+    { path: '/login', component: LoginPageComponent},
+    { path: '/admin', component: AdminPageComponent }
   ]
 });
 

@@ -1,20 +1,23 @@
-
 const ProductPageComponent = {
   props:["slice"],
     template: `
+
     <div class="container">
     <div class="row">
-    <category
-          v-for="category in categories"
-          v-bind:cat="category"
-          v-bind:key="category._id"
-          ></category> 
-    <search 
-    v-if="!slice"
-    ></search> 
+
+    <div class="searchedProd" id="inputBlock">
+      
+          <label>Sök
+            <input class="search" placeholder="sök produkt" v-model="searchItem" type="text" />
+          </label>
+
+          <div v-if="searchItem" v-for="product in filteredProducts">
+               
+          </div> 
+       </div>
           
         <product
-          v-for="product in products"
+          v-for="product in categoryFilteredProducts"
           v-bind:item="product"
           v-bind:key="product._id"
           ></product>       
@@ -26,19 +29,17 @@ const ProductPageComponent = {
     created(){
       http.get('/rest/products').then((response) => {
     // Tar ut de 3 senaste produkterna
-    this.products = response.data;
+   // this.products = response.data;
       if(this.slice){
 	    this.products = response.data.splice(- Number(this.slice));
       } else {
       	this.products = response.data;
-    }  
+    }   // Kod för att filtrera och söka vidare, ex för att visa 3 första produkterna på första sidan
 
     http.get('/rest/category').then((response) =>{
       this.categories = response.data;
-      console.log("Produkterna finns" + this.categories);
     });
-  //  Kod för att filtrera och söka vidare, ex för att viosa 3 första produkterna på första sidan
-        //      this.products = response.data.splice(0,1);
+ 
   
       }).catch((error) => {
         console.error(error);
@@ -49,8 +50,34 @@ const ProductPageComponent = {
     data(){
       return{
         products: [],
-        categories:[]
+        categories:[],
+        searchItem:[]
+      }
+    },
 
+    computed:{
+      filteredProducts: function(){
+        return this.products.filter((product)=> {
+          return product.name.match(this.searchItem);
+        });
+      },
+
+      categoryFilteredProducts: function(){
+        console.log("this.$route.params.category", this.$route.params.category)
+        //return [];
+        return this.filteredProducts.filter((product)=>{
+  
+          if(!this.$route.params.category){
+            return true; // if no category selected, do not filter
+          }
+          for(let category of product.category){
+            console.log(category.name, this.$route.params.category);
+            if(category.name == this.$route.params.category){
+              
+              return true; // found matching category
+            }
+          }
+        });
       }
     }
   }

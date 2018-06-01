@@ -16,9 +16,6 @@ const SearchComponent = {
     created(){
       http.get('/rest/products').then((response) => {
         this.products = response.data;
-        
-  //  Kod för att filtrera och söka vidare, ex för att viosa 3 första produkterna på första sidan
-         // this.products = response.data.splice(0,2);
   
       }).catch((error) => {
         console.error(error);
@@ -26,8 +23,8 @@ const SearchComponent = {
     },
     data(){
       return{
-        products: [],
-        searchItem: ''
+    
+       
       }
     },
     computed: {
@@ -36,5 +33,7 @@ const SearchComponent = {
           return product.name.match(this.searchItem);
         });
       }
+
+
     }
 }
