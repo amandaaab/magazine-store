@@ -32,6 +32,7 @@ const CartPageComponent = {
     methods: {
         pay: ()=>{
             http.post('/rest/pay', {}).then(response => {
+              alert('Du har betalat');
                 console.log(response);
               }).catch(error => {
                console.error(error);

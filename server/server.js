@@ -77,7 +77,7 @@ let frakt = 50;
   }).catch(e=>console.error);
 
   let charge = await stripe.charges.create({
-    amount: paymentSum * 100,
+    amount: paymentSum * 10,
     currency: 'sek',
     customer: source.customer
   }).catch(e=>console.error);
@@ -96,23 +96,6 @@ app.get('/rest/order', async(req, res)=>{
   let orders = await Order.find(); // {name:"The Times"}
   res.json(orders);
 }); 
-
-// Kategorier CRUD path
-app.get('/rest/category', async(req, res)=>{
-  let categories = await Category.find().populate('cat.category');
-  res.json(categories);
-});
-
-app.post('/rest/category', async(req, res)=>{
-  let category = await new Category(req.body);
-  try{
-    category.save();
-    res.json(category);
-  }catch(err){
-    console.error(err);
-    res.json(err);
-  }
-});
 
 // Produkter CRUD path
 app.get('/rest/products', async(req, res)=>{
@@ -157,6 +140,23 @@ app.delete('/rest/products/:id', async (req, res)=>{
   // delete the product from the db
   let result = await Product.deleteOne({_id: req.params.id});
   res.json(result);
+});
+
+// Kategorier CRUD path
+app.post('/rest/category', async(req, res)=>{
+  let category = await new Category(req.body);
+  try{
+    category.save();
+    res.json(category);
+  }catch(err){
+    console.error(err);
+    res.json(err);
+  }
+});
+
+app.get('/rest/category', async(req, res)=>{
+  let categories = await Category.find();
+  res.json(categories);
 });
 
 // Cart CRUD paths

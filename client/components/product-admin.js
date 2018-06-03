@@ -34,7 +34,7 @@ const ProductAdminComponent = {
         price: 0,
         vat: 0.25,
         artnr: '',
-        category:'',
+        category: '',
         message: '',
         loading: false
       };
@@ -47,7 +47,8 @@ const ProductAdminComponent = {
           description: this.description,
           price: this.price,
           vat: this.vat,
-          artnr: this.artnr
+          artnr: this.artnr,
+          category: this.category
         }).then(response => {
           console.log(response);
           this.loading = false;
