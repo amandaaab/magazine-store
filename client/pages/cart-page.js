@@ -1,28 +1,17 @@
 const CartPageComponent = {
 
     template: `
+    <div class="container mt-5">
       <div class="row">
-        <h1>Cart Page</h1>
-       <cart class="col-12"></cart>
-       <div class="col-12">
-        <label for="first-name">Förnamn: </label>
-        <input name="first-name" v-model="firstName"></input>
-        <button v-on:click="pay">Betala</button>
+       <cart class="col-sm-6"></cart>
+       <div class="payDiv col-4">
+        <button class="payButton col-sm-6  mt-5 btn btn-success" v-on:click="pay">Betala</button>
        </div>
+      </div>
       </div>
     `
     ,
-  
-   /* created(){
-      http.get('/rest/products').then((response) => {
-        this.products = response.data;
-  //  Kod för att filtrera och söka vidare, ex för att viosa 3 första produkterna på första sidan
-        //      this.products = response.data.splice(0,1);
-  
-      }).catch((error) => {
-        console.error(error);
-      });
-    },*/
+
     data(){
       return{
         firstName:''

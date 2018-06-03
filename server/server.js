@@ -93,7 +93,7 @@ let frakt = 50;
 });
 
 app.get('/rest/order', async(req, res)=>{
-  let orders = await Order.find(); // {name:"The Times"}
+  let orders = await Order.find(); 
   res.json(orders);
 }); 
 
@@ -163,7 +163,7 @@ app.get('/rest/category', async(req, res)=>{
 app.post('/rest/cart', async(req, res)=>{
   let cart = await Cart.findOne({_id: req.session.cart});
   console.log('cart', cart);
-  if(cart === null){ // This is a real bug. Haven't figured it out yet.
+  if(cart === null){ 
     console.error('Unhandled error. We should have a cart, but we only have the ID. Well just make a new one (with the id) then...', req.session.cart);
     cart = new Cart({_id: req.session.cart});
   }

@@ -1,14 +1,16 @@
 const CartComponent = {
     template: `
       <div class="card-body">
-        <h1>{{title}}</h1>
-        <table>
+        <h2 class="mb-5">{{title}}</h2>
+        <table class="table table-bordered">
+        <thead class="thead-dark">
           <tr>
-            <th>vara</th>
-            <th>pris</th>
-            <th>moms</th>
-            <th>antal</th>
+            <th>Vara</th>
+            <th>Pris</th>
+            <th>Moms</th>
+            <th>Antal</th>
           </tr>
+          </thead>
           <cart-item v-if="!loading"
             v-for="item in items"
             v-bind:item="item"

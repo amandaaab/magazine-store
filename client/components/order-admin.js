@@ -1,7 +1,7 @@
 const OrderAdminComponent = {
     template: `
       <div class="card-body">
-        <h1>{{title}}</h1>
+        <h2>{{title}}</h2>
         <ul>
           <order-item v-if="!loading"
             v-for="order in orders"
@@ -13,7 +13,7 @@ const OrderAdminComponent = {
         </div>
     `,
     created(){
-      // ladda in litta data
+     
       this.loading = true;
       http.get('/rest/order').then(response => {
         console.log('orders', response.data)

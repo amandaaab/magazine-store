@@ -1,8 +1,8 @@
 const loginComponent = {
   template: `
     <div class="card-body">
-      <h2>Logga in</h2>
-      <div v-if="user.email">
+      <h2 v-if="!user.email">Logga in</h2>
+      <div class="col-sm-12" v-if="user.email">
         <h1>Welcome {{user.email}}!</h1>
         <button v-on:click="logout" :disabled="loading">Logout</button>
       </div>
@@ -10,13 +10,12 @@ const loginComponent = {
         <label>Email
           <input type="text" v-model="email" :disabled="loading" />
         </label>
-        <label>Password
+        <label>Lösenord
           <input type="password" v-model="password" :disabled="loading" />
         </label>
-        <button type="submit" :disabled="loading">Logga in här</button>
-        <a class="reg" onclick="regHere()">Har du inget konto, registrera dig här!</a>
+        <button type="submit" class="btn btn-primary" :disabled="loading">Logga in här</button>
         <br/>
-        <span v-if="message">{{message}}</span>
+        <span v-if="message" class="col-sm-12">{{message}}</span>
       </form>
     </div>
   `,
@@ -47,15 +46,15 @@ const loginComponent = {
         console.log('/rest/login', response);
         this.loading = false;
         if(response.data.email) {
-          this.message = 'Logged in';
+          this.message = 'Inloggad';
           this.user = response.data;
         } else {
-          this.message = 'Incorrect email/password';
+          this.message = 'Fel email/password';
         }
       }).catch(error => {
         console.log('/rest/login error', error);
         this.loading = false;
-        this.message = 'Already logged in';
+        this.message = 'Redan inloggad';
       });
     },
     logout() {
@@ -67,7 +66,7 @@ const loginComponent = {
         this.user = {};
       }).catch(error => {
         this.loading = false;
-        this.message = 'Already logged out';
+        this.message = 'Redan utloggad';
       });
     }
   },

@@ -25,7 +25,7 @@ const ProductComponent = {
   },
 
   methods: {
-    addToCart() { // register
+    addToCart() { 
       this.loading = true;
       http.post('/rest/cart', {
         product: this.item._id,

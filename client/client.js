@@ -15,13 +15,14 @@ Vue.component('admin-page', AdminPageComponent);
 Vue.component('product-admin', ProductAdminComponent);
 Vue.component('order-admin', OrderAdminComponent);
 Vue.component('order-item', OrderItemComponent);
+Vue.component('category-admin', CategoryAdminComponent);
 
 const http = axios; // using axios 3rd party XHR/REST lib
 
 const router = new VueRouter({
-  mode: 'history', // html5 popstate, alternatively: 'hash'
-  base: '/', // set the correct base
-  routes: [ // our frontend routes
+  mode: 'history',
+  base: '/', 
+  routes: [ 
     { path: '/', component: HomePageComponent },
     { path: '/products/:category?', component: ProductPageComponent},
     { path: '/cart', component: CartPageComponent},
@@ -31,10 +32,10 @@ const router = new VueRouter({
 });
 
 let app = new Vue({
-  el: "#app", //Hämta element by id
+  el: "#app", 
   router,
   created(){
-    // ladda in litta data
+   
     http.get('/rest/products').then(response => {
       this.products = response.data;
     }).catch(e => {
