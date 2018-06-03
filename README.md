@@ -1,4 +1,6 @@
 # magazine-store
+Gjord med node.js, mongoDB, vue.js
+
 # Obligatoriska- User stories
 
 Som butiksägare
