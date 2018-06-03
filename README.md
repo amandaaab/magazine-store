@@ -1,6 +1,11 @@
 # magazine-store
 Gjord med node.js, mongoDB, vue.js
 
+Logga in som admin: 
+Email: admin@admin.com
+Lösenord: admin
+.. Eller skapa ett konto!
+
 # Obligatoriska- User stories
 
 Som butiksägare
