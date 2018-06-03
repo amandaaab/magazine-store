@@ -3,7 +3,9 @@
 
 Som butiksägare
 …vill jag ha en fungerande webbshop för den svenska marknaden
+
 …vill jag kunna sälja produkter.
+
 …vill jag kunna testa betalningar.
 
 Som kund
